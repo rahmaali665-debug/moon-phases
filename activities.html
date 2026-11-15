@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الأنشطة التدريبية: أطوار القمر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;600&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* عالم بصري واحد: سماء ليل البحرين، والقمر هو الضوء الوحيد */
+  --sky:#0d1530; --panel:#16204a; --line:#2a3670;
+  --ink:#eef1fb; --muted:#a9b3d6;
+  --moon:#f3d98b; --star:#8fc8ff;
+  --display:"Reem Kufi","Tajawal",system-ui,sans-serif;
+  --body:"Tajawal","Segoe UI",Tahoma,system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--sky);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.75;
+  background-image:radial-gradient(1px 1px at 12% 18%,#fff8 50%,transparent 51%),radial-gradient(1px 1px at 78% 9%,#fff6 50%,transparent 51%),radial-gradient(1.5px 1.5px at 62% 30%,#fff5 50%,transparent 51%),radial-gradient(1px 1px at 30% 44%,#fff4 50%,transparent 51%),radial-gradient(1px 1px at 90% 52%,#fff5 50%,transparent 51%);
+  background-attachment:fixed}
+.wrap{max-width:860px;margin:0 auto;padding:28px 18px 48px;display:flex;flex-direction:column;gap:26px}
+header{display:flex;flex-direction:column;gap:12px}
+.kicker{display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--moon);font-weight:700;font-size:15px}
+.kicker .sep{width:5px;height:5px;border-radius:50%;background:var(--line)}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,6vw,38px);line-height:1.35;margin:0;text-wrap:balance}
+.lead{color:var(--muted);margin:0;max-width:65ch}
+.phases{list-style:none;margin:4px 0 0;padding:12px 10px;display:grid;grid-template-columns:repeat(8,1fr);gap:4px;border:1px solid var(--line);border-radius:14px;background:#0a1128}
+.phases li{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.phases span{font-size:10.5px;color:var(--muted);line-height:1.3}
+.m-dark{fill:#28305a;stroke:#3a4680;stroke-width:1}
+.m-lit{fill:var(--moon)}
+@media (max-width:440px){.phases span{display:none}}
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0}
+.meta div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.meta dt{color:var(--muted);font-size:13.5px}
+.meta dd{margin:0;font-weight:500}
+.go{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;background:var(--moon);color:#1a1630;text-decoration:none;font-weight:700;padding:11px 20px;border-radius:999px}
+.go:focus-visible,.seg button:focus-visible{outline:3px solid var(--star);outline-offset:3px}
+h2{font-family:var(--display);font-weight:500;font-size:23px;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--moon);box-shadow:0 0 12px var(--moon)}
+.bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.bar h2{margin:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:#0a1128}
+.seg button{font:inherit;font-size:14.5px;color:var(--muted);background:none;border:0;padding:6px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.step-h{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.num{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:#0a1128;color:var(--moon);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.step-h h3{margin:0;font-size:18px;font-weight:700}
+.roles{display:grid;grid-template-columns:1fr 1fr}
+.role{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.role + .role{border-inline-start:1px solid var(--line)}
+.tag{align-self:flex-start;font-size:13px;font-weight:700;padding:2px 12px;border-radius:999px}
+.t .tag{background:#f3d98b22;color:var(--moon);box-shadow:inset 0 0 0 1px #f3d98b55}
+.s .tag{background:#8fc8ff1f;color:var(--star);box-shadow:inset 0 0 0 1px #8fc8ff55}
+.role p{margin:0}
+.mi{color:var(--muted);font-size:14.5px}
+@media (max-width:620px){.roles{grid-template-columns:1fr}.role + .role{border-inline-start:0;border-top:1px solid var(--line)}}
+body[data-show="t"] .s, body[data-show="s"] .t{display:none}
+body[data-show="t"] .roles, body[data-show="s"] .roles{grid-template-columns:1fr}
+body[data-show] .role + .role{border:0}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.box ol,.box ul{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.box li::marker{color:var(--moon);font-weight:700}
+.eval{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.eval .box h3{margin:0 0 6px;font-size:16px;color:var(--moon)}
+.eval .box p{margin:0}
+.roles-table{width:100%;border-collapse:collapse}
+.roles-table th,.roles-table td{text-align:start;padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.roles-table th{color:var(--moon);white-space:nowrap;padding-inline-end:16px}
+.roles-table tr:last-child th,.roles-table tr:last-child td{border-bottom:0}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:560px){.meta{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.go{transition:transform .15s}.go:hover{transform:translateY(-2px)}}
+
+.site h1{font-size:clamp(28px,6.5vw,42px)}
+.pick{margin:0 0 -14px;color:var(--muted);font-size:15px;font-weight:700}
+.tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tabs a{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:14px 16px;min-height:84px}
+.tabs .ic{flex:none;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:#0a1128;border:1px solid var(--line);color:var(--moon)}
+.tabs .ic svg{width:30px;height:30px}
+.tabs .tx{display:flex;flex-direction:column;gap:2px}
+.tabs small{color:var(--moon);font-size:14px;font-weight:700}
+.tabs b{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.35}
+.tabs em{font-style:normal;color:var(--muted);font-size:13.5px}
+.tabs a:hover{border-color:#4a5aa0}
+.tabs a[aria-current="true"]{background:var(--moon);border-color:var(--moon);color:#1a1630;box-shadow:0 0 0 4px #f3d98b2e,0 8px 24px #f3d98b26}
+.tabs a[aria-current="true"] small,.tabs a[aria-current="true"] em{color:#3b3358}
+.tabs a[aria-current="true"] .ic{background:#1a1630;border-color:#1a1630}
+.tabs a:focus-visible,.next:focus-visible{outline:3px solid var(--star);outline-offset:3px}
+@media (max-width:560px){.tabs{grid-template-columns:1fr}.tabs a{min-height:72px}}
+.panel{display:none;flex-direction:column;gap:26px}
+.panel.on{display:flex}
+.panel header{display:flex;flex-direction:column;gap:10px}
+h2.ptitle{font-family:var(--display);font-weight:600;font-size:clamp(24px,5.5vw,34px);line-height:1.35;margin:0;text-wrap:balance}
+h2.ptitle::before{display:none}
+.next{align-self:flex-start;color:var(--star);text-decoration:none;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:9px 18px}
+
+.top{display:flex;flex-direction:column;gap:6px}
+.top h1{font-size:clamp(28px,6.5vw,40px)}
+.panel{gap:16px}
+.ph{display:flex;flex-direction:column;gap:2px}
+.ph small{color:var(--moon);font-weight:700;font-size:14.5px}
+.ph h2{margin:0;font-size:clamp(22px,5vw,28px)}
+.panel .go{margin:2px 0 6px}
+.step-h .when{margin-inline-start:auto;color:var(--moon);font-size:13.5px;font-weight:700}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+<div class="kicker"><span>درس أطوار القمر</span><span class="sep"></span><span>إجراءات دور المعلم ودور التلميذ</span></div>
+<div class="bar" style="margin:0"><h1>الأنشطة التدريبية الثلاثة</h1><div class="seg" role="group" aria-label="عرض الأدوار"><button type="button" aria-pressed="true" data-v="">الكل</button><button type="button" aria-pressed="false" data-v="t">المعلم</button><button type="button" aria-pressed="false" data-v="s">التلميذ</button></div></div>
+</header>
+<p class="pick">اختر النشاط:</p><nav class="tabs" aria-label="أقسام الموقع"><a href="#ww1" aria-current="true"><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="5" width="24" height="17" rx="2"/><path d="M12 27h8M16 22v5M9 11h8M9 16h12"/></svg></span><span class="tx"><small>النشاط التدريبي الأول</small><b>Wordwall الأول</b><em>بعد الواقع الافتراضي · دقيقتان</em></span></a><a href="#challenge" aria-current="false"><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 10h14a6 6 0 0 1 6 6v2a4 4 0 0 1-7 3l-2-2h-8l-2 2a4 4 0 0 1-7-3v-2a6 6 0 0 1 6-6z"/><path d="M10 14v4M8 16h4"/><circle cx="21" cy="15" r="1"/><circle cx="23" cy="18" r="1"/></svg></span><span class="tx"><small>النشاط التدريبي الثاني</small><b>تحدّي أطوار القمر</b><em>بعد المختبر · دقيقتان</em></span></a><a href="#ww3" aria-current="false"><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="5" width="24" height="17" rx="2"/><path d="M12 27h8M16 22v5M9 11h8M9 16h12"/></svg></span><span class="tx"><small>النشاط التدريبي الثالث</small><b>Wordwall الثالث</b><em>بعد الواقع المعزز · دقيقتان</em></span></a></nav>
+<article class="panel on" id="ww1"><div class="ph"><small>النشاط التدريبي الأول · بعد الواقع الافتراضي · دقيقتان</small><h2>Wordwall الأول</h2></div><a class="go" href="https://wordwall.net/resource/122211402?wwmethod=link" target="_blank" rel="noopener">افتح نشاط Wordwall ←</a><ol class="steps"><li class="step"><div class="step-h"><span class="num">1</span><h3>الربط بما سبق</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يربط النشاط بـرحلة الفضاء بقوله: «عشتم انتقال القمر بين أطواره، فهل تستطيعون أن تميّزوها بمفردكم؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يتذكّر ما رآه واكتشفه في النشاط السابق، ويستعد للتحدي.</p></div></div></li><li class="step"><div class="step-h"><span class="num">2</span><h3>عرض النشاط والتعليمات</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يعرض رمز الاستجابة السريعة على السبورة الذكية، ويوضّح أن الإجابة فردية دون مساعدة الزملاء، ثم يشغّل المؤقت الإلكتروني (دقيقتان).</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يمسح الرمز بالجهاز، ويكتب اسمه، ويستمع إلى التعليمات.</p></div></div></li><li class="step"><div class="step-h"><span class="num">3</span><h3>التنفيذ</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يتجوّل بين الطلاب، ويوجّه المتردد إلى الشكل بسؤال: «كم يظهر من القمر مضيئاً؟ دائرة كاملة أم نصفها أم جزء رفيع؟» دون أن يعطيه الإجابة.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يجيب بمفرده، ويفرّق بين الأطوار من حيث الشكل (لا شكل، هلال رفيع، نصف دائرة، أكبر من نصف دائرة، دائرة كاملة). <span class="mi">(النمط البصري، والذكاء الذاتي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">4</span><h3>التغذية الراجعة</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>عند انتهاء الوقت يعرض النتائج على السبورة، ويناقش البند الذي كثر فيه الخطأ بسؤال: «ما الذي في شكله يدلّك على اسمه؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يقرأ التغذية الراجعة، ويراجع خطأه، ويبرّر الإجابة الصحيحة بلغة الشكل.</p></div></div></li><li class="step"><div class="step-h"><span class="num">5</span><h3>الانتقال</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يمهّد للمختبر ثلاثي الأبعاد مستفيداً من الأخطاء التي ظهرت في النتائج.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يستعد للنشاط التالي.</p></div></div></li></ol></article><article class="panel" id="challenge"><div class="ph"><small>النشاط التدريبي الثاني · بعد المختبر · دقيقتان</small><h2>تحدّي أطوار القمر</h2></div><a class="go" href="https://claude.ai/artifact/JdvMcEwWckWhHzkHXAivtz" target="_blank" rel="noopener">افتح لعبة التحدي ←</a><ol class="steps"><li class="step"><div class="step-h"><span class="num">1</span><h3>الربط بالمختبر</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يقول: «تحكّمتم في القمر واكتشفتم سرّ تغيّر شكله، فهل تستطيعون الفوز بالتحدي؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يتحمّس للتحدي، ويتذكر ما اكتشفه في المختبر.</p></div></div></li><li class="step"><div class="step-h"><span class="num">2</span><h3>عرض اللعبة والتعليمات</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يعرض رمز اللعبة على السبورة الذكية، ويوضّح أن اللعب فردي، وأن على كل تلميذ أن ينظر إلى حجم الجزء المضيء وجهته قبل أن يجيب، ثم يشغّل المؤقت (دقيقتان).</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يفتح اللعبة على الجهاز اللوحي، ويستمع إلى التعليمات، ويتناوب مع زميله على الجهاز.</p></div></div></li><li class="step"><div class="step-h"><span class="num">3</span><h3>اللعب</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يتجوّل بين الطلاب، ويسأل المتردد: «في أيّ جهة الضوء؟ وهل المضيء أقل من النصف أم أكثر؟» دون أن يعطيه الإجابة.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يجيب بمفرده، ويفرّق بين الأطوار المتشابهة بالحجم والاتجاه: الأطوار الأولى إلى اليمين، والأخيرة إلى اليسار. <span class="mi">(الذكاء المنطقي الرياضي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">4</span><h3>التغذية الراجعة الفورية</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يشجّع من أخطأ على قراءة التغذية الراجعة وإعادة المحاولة، ويدوّن الأطوار التي يتكرر فيها الخطأ.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يقرأ التغذية الراجعة بعد كل سؤال، ويعيد المحاولة إن أخطأ.</p></div></div></li><li class="step"><div class="step-h"><span class="num">5</span><h3>الختام</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يناقش الطورين اللذين كثر فيهما الخلط بسؤال عن الفرق بينهما، ثم يمهّد للواقع المعزز.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يبرّر الفرق بين الطورين بعبارته، ويسلّم الجهاز لجالب الأدوات.</p></div></div></li></ol></article><article class="panel" id="ww3"><div class="ph"><small>النشاط التدريبي الثالث · بعد الواقع المعزز · دقيقتان</small><h2>Wordwall الثالث</h2></div><a class="go" href="https://wordwall.net/resource/28359810?wwmethod=link" target="_blank" rel="noopener">افتح نشاط Wordwall ←</a><ol class="steps"><li class="step"><div class="step-h"><span class="num">1</span><h3>الربط بما سبق</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يربط النشاط بـالواقع المعزز بقوله: «اكتشفتم الأطوار مع مجموعتكم على الطاولة، فهل تستطيع أن تفرّق بينها وحدك؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يتذكّر ما رآه واكتشفه في النشاط السابق، ويستعد للتحدي.</p></div></div></li><li class="step"><div class="step-h"><span class="num">2</span><h3>عرض النشاط والتعليمات</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يعرض رمز الاستجابة السريعة على السبورة الذكية، ويوضّح أن الإجابة فردية دون مساعدة الزملاء، ثم يشغّل المؤقت الإلكتروني (دقيقتان).</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يمسح الرمز بالجهاز، ويكتب اسمه، ويستمع إلى التعليمات.</p></div></div></li><li class="step"><div class="step-h"><span class="num">3</span><h3>التنفيذ</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يتجوّل بين الطلاب، ويوجّه المتردد إلى الشكل بسؤال: «في أيّ جهة الضوء؟ وهل هو أقل من النصف أم أكثر؟» دون أن يعطيه الإجابة.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يجيب بمفرده، ويفرّق بين الأطوار من حيث الشكل والاتجاه، كالتفريق بين الهلال الجديد (الضوء على اليمين) والهلال الأخير (الضوء على اليسار). <span class="mi">(النمط البصري، والذكاء الذاتي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">4</span><h3>التغذية الراجعة</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>عند انتهاء الوقت يعرض النتائج على السبورة، ويناقش البند الذي كثر فيه الخطأ بسؤال: «ما الذي في شكله يدلّك على اسمه؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يقرأ التغذية الراجعة، ويراجع خطأه، ويبرّر الإجابة الصحيحة بلغة الشكل.</p></div></div></li><li class="step"><div class="step-h"><span class="num">5</span><h3>الانتقال</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يمهّد للتقويم الختامي على Wayground.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يستعد للتقويم الختامي.</p></div></div></li></ol></article>
+</main>
+<script>
+(function(){
+var panels=[].slice.call(document.querySelectorAll('.panel'));
+var tabs=[].slice.call(document.querySelectorAll('.tabs a'));
+function show(){if(!tabs.length)return;var id=(location.hash||'').slice(1);if(!panels.some(function(p){return p.id===id}))id=panels[0].id;
+ panels.forEach(function(p){p.classList.toggle('on',p.id===id)});
+ tabs.forEach(function(t){t.setAttribute('aria-current',t.getAttribute('href')==='#'+id?'true':'false')});}
+window.addEventListener('hashchange',function(){show();window.scrollTo(0,0)});show();
+var bs=[].slice.call(document.querySelectorAll('.seg button'));
+bs.forEach(function(x){x.addEventListener('click',function(){var v=x.dataset.v;
+ bs.forEach(function(y){y.setAttribute('aria-pressed',y.dataset.v===v?'true':'false')});
+ if(v)document.body.dataset.show=v;else delete document.body.dataset.show;});});
+})();
+</script>
+</body>
+</html>

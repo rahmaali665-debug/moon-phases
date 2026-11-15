@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>التقنيات الغامرة: أطوار القمر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;600&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* عالم بصري واحد: سماء ليل البحرين، والقمر هو الضوء الوحيد */
+  --sky:#0d1530; --panel:#16204a; --line:#2a3670;
+  --ink:#eef1fb; --muted:#a9b3d6;
+  --moon:#f3d98b; --star:#8fc8ff;
+  --display:"Reem Kufi","Tajawal",system-ui,sans-serif;
+  --body:"Tajawal","Segoe UI",Tahoma,system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--sky);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.75;
+  background-image:radial-gradient(1px 1px at 12% 18%,#fff8 50%,transparent 51%),radial-gradient(1px 1px at 78% 9%,#fff6 50%,transparent 51%),radial-gradient(1.5px 1.5px at 62% 30%,#fff5 50%,transparent 51%),radial-gradient(1px 1px at 30% 44%,#fff4 50%,transparent 51%),radial-gradient(1px 1px at 90% 52%,#fff5 50%,transparent 51%);
+  background-attachment:fixed}
+.wrap{max-width:860px;margin:0 auto;padding:28px 18px 48px;display:flex;flex-direction:column;gap:26px}
+header{display:flex;flex-direction:column;gap:12px}
+.kicker{display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--moon);font-weight:700;font-size:15px}
+.kicker .sep{width:5px;height:5px;border-radius:50%;background:var(--line)}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,6vw,38px);line-height:1.35;margin:0;text-wrap:balance}
+.lead{color:var(--muted);margin:0;max-width:65ch}
+.phases{list-style:none;margin:4px 0 0;padding:12px 10px;display:grid;grid-template-columns:repeat(8,1fr);gap:4px;border:1px solid var(--line);border-radius:14px;background:#0a1128}
+.phases li{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.phases span{font-size:10.5px;color:var(--muted);line-height:1.3}
+.m-dark{fill:#28305a;stroke:#3a4680;stroke-width:1}
+.m-lit{fill:var(--moon)}
+@media (max-width:440px){.phases span{display:none}}
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0}
+.meta div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.meta dt{color:var(--muted);font-size:13.5px}
+.meta dd{margin:0;font-weight:500}
+.go{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;background:var(--moon);color:#1a1630;text-decoration:none;font-weight:700;padding:11px 20px;border-radius:999px}
+.go:focus-visible,.seg button:focus-visible{outline:3px solid var(--star);outline-offset:3px}
+h2{font-family:var(--display);font-weight:500;font-size:23px;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--moon);box-shadow:0 0 12px var(--moon)}
+.bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.bar h2{margin:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:#0a1128}
+.seg button{font:inherit;font-size:14.5px;color:var(--muted);background:none;border:0;padding:6px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.step-h{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.num{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:#0a1128;color:var(--moon);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.step-h h3{margin:0;font-size:18px;font-weight:700}
+.roles{display:grid;grid-template-columns:1fr 1fr}
+.role{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.role + .role{border-inline-start:1px solid var(--line)}
+.tag{align-self:flex-start;font-size:13px;font-weight:700;padding:2px 12px;border-radius:999px}
+.t .tag{background:#f3d98b22;color:var(--moon);box-shadow:inset 0 0 0 1px #f3d98b55}
+.s .tag{background:#8fc8ff1f;color:var(--star);box-shadow:inset 0 0 0 1px #8fc8ff55}
+.role p{margin:0}
+.mi{color:var(--muted);font-size:14.5px}
+@media (max-width:620px){.roles{grid-template-columns:1fr}.role + .role{border-inline-start:0;border-top:1px solid var(--line)}}
+body[data-show="t"] .s, body[data-show="s"] .t{display:none}
+body[data-show="t"] .roles, body[data-show="s"] .roles{grid-template-columns:1fr}
+body[data-show] .role + .role{border:0}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.box ol,.box ul{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.box li::marker{color:var(--moon);font-weight:700}
+.eval{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.eval .box h3{margin:0 0 6px;font-size:16px;color:var(--moon)}
+.eval .box p{margin:0}
+.roles-table{width:100%;border-collapse:collapse}
+.roles-table th,.roles-table td{text-align:start;padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.roles-table th{color:var(--moon);white-space:nowrap;padding-inline-end:16px}
+.roles-table tr:last-child th,.roles-table tr:last-child td{border-bottom:0}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:560px){.meta{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.go{transition:transform .15s}.go:hover{transform:translateY(-2px)}}
+
+.site h1{font-size:clamp(28px,6.5vw,42px)}
+.pick{margin:0 0 -14px;color:var(--muted);font-size:15px;font-weight:700}
+.tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tabs a{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:14px 16px;min-height:84px}
+.tabs .ic{flex:none;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:#0a1128;border:1px solid var(--line);color:var(--moon)}
+.tabs .ic svg{width:30px;height:30px}
+.tabs .tx{display:flex;flex-direction:column;gap:2px}
+.tabs small{color:var(--moon);font-size:14px;font-weight:700}
+.tabs b{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.35}
+.tabs em{font-style:normal;color:var(--muted);font-size:13.5px}
+.tabs a:hover{border-color:#4a5aa0}
+.tabs a[aria-current="true"]{background:var(--moon);border-color:var(--moon);color:#1a1630;box-shadow:0 0 0 4px #f3d98b2e,0 8px 24px #f3d98b26}
+.tabs a[aria-current="true"] small,.tabs a[aria-current="true"] em{color:#3b3358}
+.tabs a[aria-current="true"] .ic{background:#1a1630;border-color:#1a1630}
+.tabs a:focus-visible,.next:focus-visible{outline:3px solid var(--star);outline-offset:3px}
+@media (max-width:560px){.tabs{grid-template-columns:1fr}.tabs a{min-height:72px}}
+.panel{display:none;flex-direction:column;gap:26px}
+.panel.on{display:flex}
+.panel header{display:flex;flex-direction:column;gap:10px}
+h2.ptitle{font-family:var(--display);font-weight:600;font-size:clamp(24px,5.5vw,34px);line-height:1.35;margin:0;text-wrap:balance}
+h2.ptitle::before{display:none}
+.next{align-self:flex-start;color:var(--star);text-decoration:none;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:9px 18px}
+
+.top{display:flex;flex-direction:column;gap:6px}
+.top h1{font-size:clamp(28px,6.5vw,40px)}
+.panel{gap:16px}
+.ph{display:flex;flex-direction:column;gap:2px}
+.ph small{color:var(--moon);font-weight:700;font-size:14.5px}
+.ph h2{margin:0;font-size:clamp(22px,5vw,28px)}
+.panel .go{margin:2px 0 6px}
+.step-h .when{margin-inline-start:auto;color:var(--moon);font-size:13.5px;font-weight:700}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+<div class="kicker"><span>درس أطوار القمر</span><span class="sep"></span><span>إجراءات دور المعلم ودور التلميذ</span></div>
+<div class="bar" style="margin:0"><h1>التقنيات الغامرة الثلاث</h1><div class="seg" role="group" aria-label="عرض الأدوار"><button type="button" aria-pressed="true" data-v="">الكل</button><button type="button" aria-pressed="false" data-v="t">المعلم</button><button type="button" aria-pressed="false" data-v="s">التلميذ</button></div></div>
+</header>
+<p class="pick">اختر التقنية:</p><nav class="tabs" aria-label="أقسام الموقع"><a href="#vr" aria-current="true"><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11h24v11h-8l-2.5-3h-3L12 22H4z"/><circle cx="10" cy="16.5" r="2.2"/><circle cx="22" cy="16.5" r="2.2"/><path d="M9 11l2-3h10l2 3"/></svg></span><span class="tx"><small>التقنية الأولى</small><b>الواقع الافتراضي</b><em>نظارة وفيديو 360° · 13 دقيقة</em></span></a><a href="#lab" aria-current="false"><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M16 4l11 6v12l-11 6-11-6V10z"/><path d="M5 10l11 6 11-6M16 16v12"/></svg></span><span class="tx"><small>التقنية الثانية</small><b>مختبر أطوار القمر</b><em>موقع ثلاثي الأبعاد · 8 دقائق</em></span></a><a href="#ar" aria-current="false"><span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="3" width="14" height="26" rx="3"/><circle cx="16" cy="14" r="4"/><path d="M14 25h4"/></svg></span><span class="tx"><small>التقنية الثالثة</small><b>الواقع المعزز</b><em>القمر على طاولتك · 8 دقائق</em></span></a></nav>
+<article class="panel on" id="vr"><div class="ph"><small>التقنية الأولى · نظارة وفيديو 360° · 13 دقيقة</small><h2>الواقع الافتراضي</h2></div><a class="go" href="https://youtu.be/57R0AvC9lYI" target="_blank" rel="noopener">افتح فيديو 360° ←</a><ol class="steps"><li class="step"><div class="step-h"><span class="num">1</span><h3>التعريف بالأطوار</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يعرض صورة القمر بدراً، ويخبر الطلاب بأسلوب مشوّق أن القمر في سماء البحرين له ثمانية أشكال يُسمّى كلٌّ منها طوراً، ثم يعرض صورة الأطوار من كتاب التلميذ ويكشفها طوراً بعد طور معرّفاً كلاً منها.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يستمع إلى المعلم باهتمام، ويردّد اسم كل طور بعد كشفه. <span class="mi">(النمط السمعي والبصري)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">2</span><h3>إثارة التساؤل وتوزيع الأدوات</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يقدّم لكل مجموعة هاتفاً ونظارة، ثم يسأل: «تعرّفنا إلى الأطوار الثمانية، ولكن هل رأيتم كيف ينتقل القمر من طور إلى آخر؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يتسلّم الأدوات مع مجموعته دون تشغيلها، ويفكّر في السؤال.</p></div></div></li><li class="step"><div class="step-h"><span class="num">3</span><h3>عرض التعليمات والسلامة</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يعرض تعليمات النشاط وتعليمات السلامة على السبورة، ويطلب من مسؤول التعليمات قراءتها.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يقرأ التعليمات مع مسؤول التعليمات، ويتأكد من خلوّ المكان حوله من الحقائب والأدوات.</p></div></div></li><li class="step"><div class="step-h"><span class="num">4</span><h3>خوض التجربة</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يشغّل المؤقت، ويتأكد أن كل مجموعة بدأت الفيديو وأن من يلبس النظارة جالس على كرسيه.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يلبس النظارة ويلتفت حتى يجد القمر، ويعلن اسم كل طور يراه؛ فيضع الراصد علامة على الطور المُعلَن، ويتحقق الزملاء منه بصورة الكتاب، حتى يعيش كل طالب التجربة. <span class="mi">(النمط البصري، والحس حركي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">5</span><h3>المتابعة والتوجيه</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يتجوّل بين المجموعات متابعاً الالتزام بالسلامة، ويسأل من يلبس النظارة عن الجزء المضيء الذي يراه وعمّا يحدث له كلما انتقل القمر إلى طور جديد؛ ليوجّه انتباهه إلى التغيّر نفسه لا إلى جمال المشهد فحسب.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يصف الجزء المضيء الذي يراه، ويذكر أنه يزيد أو ينقص من طور إلى آخر. <span class="mi">(الذكاء اللغوي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">6</span><h3>الانتقال إلى التدريب</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يجمع النظارات والهواتف، ثم يقدّم النشاط التدريبي الفردي على Wordwall لقياس الفهم.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يسلّم جالب الأدوات النظارة والهاتف، ويستعد للنشاط التدريبي.</p></div></div></li></ol></article><article class="panel" id="lab"><div class="ph"><small>التقنية الثانية · موقع ثلاثي الأبعاد · 8 دقائق</small><h2>مختبر أطوار القمر</h2></div><a class="go" href="https://claude.ai/artifact/UG5T5X4APny7BVnHerGUrA" target="_blank" rel="noopener">افتح مختبر أطوار القمر ←</a><ol class="steps"><li class="step"><div class="step-h"><span class="num">1</span><h3>الربط برحلة الفضاء</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يقول: «يا أبطال، رأيتم في رحلتكم القمر ينتقل من طور إلى آخر، والجزء المضيء منه يزيد ثم ينقص، لكنكم كنتم تشاهدون فقط، فهل تريدون الآن أن تتحكموا في القمر بأيديكم، وتكتشفوا لماذا يتغير شكله؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يتفاعل مع الفكرة، ويتذكر ما رآه في النظارة، ويشارك توقعه لسبب تغيّر الشكل، كأن يقول: «لأن القمر يتحرك» أو «لأن ظل الأرض يغطيه». <span class="mi">(الذكاء اللغوي، والذكاء الذاتي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">2</span><h3>سؤال الاستكشاف</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يستقبل التوقعات دون أن يصححها، ثم يعرض على السبورة: «حرّكوا القمر حول الأرض، ولاحظوا: ما الذي يتغير، القمر نفسه أم الجزء الذي نراه منه؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يقرأ السؤال، ويستعد للبحث عن إجابته.</p></div></div></li><li class="step"><div class="step-h"><span class="num">3</span><h3>عرض التعليمات</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يعرض الموقع على السبورة الذكية، ويضغط «ابدأ الرحلة» ثم «كيف ألعب؟»، ويطلب من مسؤول التعليمات قراءة التعليمات بصوت مرتفع.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يستمع إلى التعليمات، ويتابع خطواتها على السبورة.</p></div></div></li><li class="step"><div class="step-h"><span class="num">4</span><h3>التعريف بالموقع وتوزيع الأجهزة</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يوضّح النافذتين: «منظر الفضاء» التي تُظهر الشمس والأرض والقمر من بعيد، و«من الأرض» التي تُظهر القمر كما يراه طفل في البحرين، وأن «سُهيل» يشرح كل طور بزر «استمع». ثم يطلب من جالب الأدوات توزيع الأجهزة ويشغّل المؤقت.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يفتح الموقع مع مجموعته، ويضغط «ابدأ الرحلة».</p></div></div></li><li class="step"><div class="step-h"><span class="num">5</span><h3>المشاهدة: شغّل الحركة</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يطلب الضغط على «شغّل الحركة» ومراقبة دورة كاملة، ثم يسأل: «هل هذا ما رأيتموه في رحلة الفضاء؟ ماذا يحدث لشكل القمر في نافذة (من الأرض) كلما دار حول الأرض؟»</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يتابع القمر وهو يدور، ويربط ما يراه بما عاشه في النظارة، ويلاحظ تغيّر شكله من طور إلى آخر، ثم يوقف الحركة.</p></div></div></li><li class="step"><div class="step-h"><span class="num">6</span><h3>التحكم وجمع «ألبومي»</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يطلب تحريك القمر بسحبه حول الأرض أو بشريط «حرّك القمر»، وإيقافه عند كل طور ليُضاف إلى «ألبومي»، ويوجّه إلى مقياس «الجزء المضيء الذي نراه» و«عمر القمر في الشهر الهجري» إثراءً.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يسحب القمر حول الأرض، ويقرأ نسبة الجزء المضيء وعمر القمر، فيربط الهلال الجديد بأول الشهر والبدر بمنتصفه، حتى يكتمل ألبومه (8/8). <span class="mi">(النمط الحس حركي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">7</span><h3>اكشف السر</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يطلب الضغط على «اكشف السر»، ويسأل عمّا تعنيه الألوان الثلاثة على القمر؛ ليقودهم إلى السبب دون أن يصرّح به.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يقرأ دليل الألوان: الأصفر ما تضيئه الشمس، والأزرق ما يواجه الأرض، والأخضر ما نراه مضيئاً؛ فيستنتج أن نصف القمر مضيء دائماً وأننا لا نرى منه إلا الجزء الأخضر. <span class="mi">(النمط البصري، والذكاء المنطقي الرياضي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">8</span><h3>التفريق بين طورين متشابهين</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يطلب الضغط على زرّي طورين متشابهين في الشكل، كالهلال الجديد والهلال الأخير، ومقارنتهما في نافذة «من الأرض».</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يضغط زرّي الطورين، ويفرّق بينهما بأن الضوء في الهلال الجديد في جهة وفي الهلال الأخير في الجهة الأخرى، ثم يضغط «استمع» ليسمع شرح سُهيل.</p></div></div></li><li class="step"><div class="step-h"><span class="num">9</span><h3>العودة إلى التوقعات</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يعود إلى سؤال الاستكشاف وتوقعات البداية، ويسأل: «من كان توقعه صحيحاً؟» ليصحح الطلاب بأنفسهم تصوّري «ظل الأرض» و«تغيّر حجم القمر»، ثم يقدّم لعبة «تحدّي أطوار القمر».</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يقارن توقعه بما اكتشفه ويصححه: الذي يتغير هو الجزء المضيء الذي نراه، لا القمر نفسه.</p></div></div></li></ol></article><article class="panel" id="ar"><div class="ph"><small>التقنية الثالثة · القمر على طاولتك · 8 دقائق</small><h2>الواقع المعزز</h2></div><a class="go" href="https://claude.ai/artifact/WQqGbzJLwN26jxgiV8A1wU" target="_blank" rel="noopener">افتح موقع الواقع المعزز ←</a><ol class="steps"><li class="step"><div class="step-h"><span class="num">1</span><h3>الربط وتوزيع الأدوار</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يقول: «اكتشفتم في المختبر لماذا يتغير شكل القمر، فما رأيكم أن نضعه على طاولتكم ونكتشف أطواره معاً؟» ثم يوزّع الأدوار الخمسة والأطوار، ولوحة دورة القمر.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يتسلّم دوره وطوريه، ويستعد مع مجموعته. <span class="mi">(الذكاء الاجتماعي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">2</span><h3>عرض التعليمات</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يعرض تعليمات النشاط على السبورة، ويؤكد قواعد الحركة الآمنة حول الطاولة، ثم يشغّل المؤقت الإلكتروني.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يقرأ التعليمات مع مجموعته، ويتأكد من خلوّ الطاولة وما حولها من الحقائب.</p></div></div></li><li class="step"><div class="step-h"><span class="num">3</span><h3>الاستكشاف على الطاولة</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يتابع التزام المجموعات بالحركة الهادئة حول الطاولة، وانتقال الهاتف بين الأفراد بالدور.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يُظهر ماسك الهاتف القمر على الطاولة ويصف الجزء المضيء، فيرسمه الراصد في اللوحة، ثم ينتقل الهاتف إلى زميله لطوره التالي. <span class="mi">(النمط الحس حركي، والبصري، والذكاء الجسدي الحركي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">4</span><h3>المقارنة بين الأطوار</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يتجوّل بين المجموعات، ويسأل المقارن عمّا يختلف به الطور عن الطور الذي قبله، ويطلب من التلميذ الذي يحتاج دعماً الضغط على «أظهر الجزء المضيء» ليرى حدود الضوء.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يفرّق المقارن بين الطورين بعد التشاور مع مجموعته، كأن يقول إن الضوء في الهلال الجديد على اليمين وفي الهلال الأخير على اليسار. <span class="mi">(الذكاء المنطقي الرياضي، والذكاء الاجتماعي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">5</span><h3>العرض والتحدي الفردي</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يطلب من المقرر عرض لوحة مجموعته، ثم يطلب من كل طالب الانتقال إلى «التحديات» واختيار «فرّق بين الطورين» والإجابة عنه بمفرده.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يعرض المقرر اللوحة، ثم يجيب كل طالب عن التحدي بمفرده، فإن أخطأ قرأ التلميح وصحّح إجابته. <span class="mi">(النمط البصري، والذكاء الذاتي)</span></p></div></div></li><li class="step"><div class="step-h"><span class="num">6</span><h3>الانتقال إلى التدريب</h3></div><div class="roles"><div class="role t"><span class="tag">دور المعلم</span><p>يجمع الهواتف، ويقدّم نشاط Wordwall التدريبي الفردي.</p></div><div class="role s"><span class="tag">دور التلميذ</span><p>يسلّم الهاتف لجالب الأدوات، ويستعد للنشاط التدريبي.</p></div></div></li></ol></article>
+</main>
+<script>
+(function(){
+var panels=[].slice.call(document.querySelectorAll('.panel'));
+var tabs=[].slice.call(document.querySelectorAll('.tabs a'));
+function show(){if(!tabs.length)return;var id=(location.hash||'').slice(1);if(!panels.some(function(p){return p.id===id}))id=panels[0].id;
+ panels.forEach(function(p){p.classList.toggle('on',p.id===id)});
+ tabs.forEach(function(t){t.setAttribute('aria-current',t.getAttribute('href')==='#'+id?'true':'false')});}
+window.addEventListener('hashchange',function(){show();window.scrollTo(0,0)});show();
+var bs=[].slice.call(document.querySelectorAll('.seg button'));
+bs.forEach(function(x){x.addEventListener('click',function(){var v=x.dataset.v;
+ bs.forEach(function(y){y.setAttribute('aria-pressed',y.dataset.v===v?'true':'false')});
+ if(v)document.body.dataset.show=v;else delete document.body.dataset.show;});});
+})();
+</script>
+</body>
+</html>
